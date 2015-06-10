@@ -128,18 +128,20 @@ class averageNumberOfEditsSinceLastMonth:
 		date = self.one_month_ago()
 		total_items = 0
 		total_edits = 0
-		for i in range(1,100001):
-			entity = "Q" + str(i)
-			response = requests.get("http://www.wikidata.org/w/index.php?title=" + entity + "&offset=&limit=500&action=history").text
-			if response.find("There is no edit history for this page.") != -1:
-				continue
-			edits = self.get_amount_of_edits_since(date, response)
-			total_edits += edits
-			total_items += 1
-			print(entity, edits)
+		with open("averageNumberOfEditsInLastMonth.csv", "w") as f:
+			for i in range(1,100001):
+				entity = "Q" + str(i)
+				response = requests.get("http://www.wikidata.org/w/index.php?title=" + entity + "&offset=&limit=500&action=history").text
+				if response.find("There is no edit history for this page.") != -1:
+					continue
+				edits = self.get_amount_of_edits_since(date, response)
+				total_edits += edits
+				total_items += 1
+				print(entity, edits)
+				f.write(entity + ';' + str(edits) + '\n')
+				f.flush()
 
-		print("Total items: " + str(total_items) + "\nTotal edits: " + str(total_edits) + "\nAverage number of edits since last month: " + str(float(total_edits) / total_items))
-		with open("averageNumberOfEditsInLastMonth.txt", "w") as f:
+			print("Total items: " + str(total_items) + "\nTotal edits: " + str(total_edits) + "\nAverage number of edits since last month: " + str(float(total_edits) / total_items))
 			f.write(str(float(total_edits) / total_items))
 
 def main():
