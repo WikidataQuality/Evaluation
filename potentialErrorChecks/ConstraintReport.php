@@ -14,20 +14,21 @@ require_once $basePath . "/maintenance/Maintenance.php";
 
 class ConstraintReport extends \Maintenance {
 
-	public function execute(){
-	    if ( $argc == 2 ) {
-	        $numberItemsToCheck = $argv[1];
-	    } else {
-	        // when no upper bound is given, try to check all of them
-	        $numberItemsToCheck = 20000000;
-	    }
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = "Checks constraints on items. Add --start and/or --end when you only want to check some items";
+		$this->addOption( 'start', 'numeric item id the checks starts with', true, true );
+		$this->addOption( 'end', 'numeric item id the checks ends with', true, true );
+	}
 
-        $n = 0;
-        $i = 1;
-		while( $n <= $numberItemsToCheck {
+	public function execute(){
+	    $item = $this->getOption( 'start' ) ? $this->getOption( 'start' ) : 1; 
+	    $end = $this->getOption( 'end' ) ? $this->getOption( 'end' ) : 21000000; 
+		
+		while( $item <= $end {
 			$itemId = 'Q' . $item;
 			echo "$itemId\n";
-			$i += 1;
+			$item += 1;
 			$entity = $lookup->getEntity( new ItemId( $itemId ) );
 			if ( $entity ) {
 				$service = new EvaluateConstraintReportJobService();
@@ -35,7 +36,6 @@ class ConstraintReport extends \Maintenance {
 				$resultSummary = $service->getResults( $params );
 				$messageToLog = $service->buildMessageForLog( $resultSummary, null, $params );
 				$service->writeToLog( $messageToLog );
-				$n = $n + 1;
 			}
 		}
 	}

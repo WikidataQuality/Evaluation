@@ -39,7 +39,7 @@ with open(sys.argv[1]) as f:
             if partials != 0:
                 output += ';' + str(float(partials)/(partials+mismatches)).replace('.', ',')
             else:
-                continue
+                output += ';0'
             cc.write(output + '\n')
         elif a['special_page_id'] == 'SpecialConstraintReport':
             constraints_intern = violations_intern = 0
@@ -141,7 +141,7 @@ with open(sys.argv[1]) as f:
             elif str(a['entity_id'])[0] == 'P' and constraints > 0:
                 crp.write(str(a['entity_id']) + ';' + str(constraints_intern) + ';' + str(violations_intern) + ';' + quote + ';' + str(qualifer_comp) + ';' + str(qualifer_vio) + ';' + str(qualifers_comp) + ';' + str(qualifers_vio) + ';' + str(mandatory_comp) + ';' + str(mandatory_vio) + ';' + str(format_comp) + ';' + str(format_vio) + ';' + str(one_of_comp) + ';' + str(one_of_vio) + ';' + str(symmetric_comp) + ';' + str(symmetric_vio) + ';' + str(inverse_comp) + ';' + str(inverse_vio) + ';' + str(target_comp) + ';' + str(target_vio) + ';' + str(single_comp) + ';' + str(single_vio) + ';' + str(multi_comp) + ';' + str(multi_vio) + ';' + str(commons_comp) + ';' + str(commons_vio) + ';' + str(type_comp) + ';' + str(type_vio) + ';' + str(value_type_comp) + ';' + str(value_type_vio) + ';' + str(range_comp) + ';' + str(range_vio) + ';' + str(diff_comp) + ';' + str(diff_vio) + ';' + str(item_comp) + ';' + str(item_vio) + ';' + str(conflicts_comp) + ';' + str(conflicts_vio) + '\n')
 
-overall.write(str(constraints) + ';' + str(violations) + ';' + str(todo) + ';' + str(float(violations) / constraints) + ';' + str(float(todo) / constraints))
+#overall.write(str(constraints) + ';' + str(violations) + ';' + str(todo) + ';' + str(float(violations) / constraints) + ';' + str(float(todo) / constraints))
 overall.close()
 cc.close()
 cr.close()

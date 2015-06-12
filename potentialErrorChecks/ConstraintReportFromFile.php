@@ -14,16 +14,20 @@ require_once $basePath . "/maintenance/Maintenance.php";
 
 class ConstraintReportFromFile extends \Maintenance {
 
+	public function __construct() {
+		parent::__construct();
+		$this->mDescription = "Checks constraints on items from file. Add --file and optional --number if you only want to the first x of them.";
+		$this->addOption( 'file', 'file with semicolon-seperated numeric item ids you want to be checked', true, true );
+		$this->addOption( 'number', 'number of items you want to be checked', true, true );
+	}
+		
 	public function execute(){
-	    if ( $argc < 2 ) {
-            exit("Usage: php ConstraintReport.php fileWithCommaSeperatedListOfItemsToCheck [numberOfItemsToCheck]");
+	    if ( !$this->getOption( 'file' ) ) {
+            exit("Usage: php ConstraintReport.php --fileWithSemicolonSeperatedListOfItemsToCheck [numberOfItemsToCheck]");
 	    }
-	    if ( $argc == 3 ) {
-	        $numberItemsToCheck = $argv[2];
-	    } else {
-	        $numberItemsToCheck = -1;
-	    }
-	    $itemsFile = file_get_contents( $argv[1] );
+	    $numberItemsToCheck = $this->getOptions( 'number' ) ? $this->getOptions( 'number' ) : -1;
+		
+	    $itemsFile = file_get_contents( $this->getOptions( 'file' ) );
 		$items = explode( ';', $itemsFile );
 		$lookup = WikibaseRepo::getDefaultInstance()->getEntityLookup();
 
