@@ -44,7 +44,7 @@ class CrossCheckFromFile extends \Maintenance {
 				$service->writeToLog( $messageToLog );
 				$n += 1;
 			}
-			if ( $n >= $numberItemsToCheck ) {
+			if ( $n === $numberItemsToCheck ) {
 				break;
 			}
 		}
