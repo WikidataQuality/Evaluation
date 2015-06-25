@@ -16,7 +16,7 @@ class CrossCheck extends \Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Checks constraints on items. Add --start and/or --end when you only want to check some items";
+		$this->mDescription = "Cross-checks items against external DBs. Add --start and/or --end when you only want to check some items";
 		$this->addOption( 'start', 'numeric item id the checks starts with', true, true );
 		$this->addOption( 'end', 'numeric item id the checks ends with', true, true );
 	}
