@@ -1,2 +1,12 @@
-.gitignore
+# PHPStrom Config #
+###################
 .idea/
+
+# Eclipse Config #
+##################
+JEvaluation/.settings/
+JEvaluation/.project
+
+# Compiled Source #
+###################
+JEvaluation/bin/

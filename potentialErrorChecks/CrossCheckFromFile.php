@@ -18,14 +18,14 @@ class CrossCheckFromFile extends \Maintenance {
 		parent::__construct();
 		$this->mDescription = "Checks constraints on items from file. Add --file and optional --number if you only want to the first x of them.";
 		$this->addOption( 'file', 'file with semicolon-seperated numeric item ids you want to be checked', true, true );
-		$this->addOption( 'number', 'number of items you want to be checked', true, true );
+		$this->addOption( 'number', 'number of items you want to be checked', false, true );
 	}
 		
 	public function execute(){
 	    if ( !$this->getOption( 'file' ) ) {
             exit("Usage: php ConstraintReport.php --fileWithSemicolonSeperatedListOfItemsToCheck [numberOfItemsToCheck]");
 	    }
-	    $numberItemsToCheck = $this->getOptions( 'number' ) ? $this->getOptions( 'number' ) : -1;
+	    $numberItemsToCheck = $this->getOption( 'number' ) ? $this->getOptions( 'number' ) : -1;
 		
 	    $itemsFile = file_get_contents( $this->getOptions( 'file' ) );
 		$items = explode( ';', $itemsFile );
@@ -44,7 +44,7 @@ class CrossCheckFromFile extends \Maintenance {
 				$service->writeToLog( $messageToLog );
 				$n += 1;
 			}
-			if ( $n >= $numberItemsToCheck ) {
+			if ( $n === $numberItemsToCheck ) {
 				break;
 			}
 		}
