@@ -23,14 +23,15 @@ class ConstraintReport extends \Maintenance {
 	}
 
 	public function execute(){
-		$amount = $this->getOption( 'amount' ) ? $this->getOption( 'amount' ) : 14000000;   
-	    $start = $this->getOption( 'start' ) ? $this->getOption( 'start' ) : 1; 
-	    $end = $this->getOption( 'end' ) ? $this->getOption( 'end' ) : 21000000; 
+		$amount = $this->getOption( 'amount' ) ? $this->getOption( 'amount' ) : 14000000;
+	  $start = $this->getOption( 'start' ) ? $this->getOption( 'start' ) : 1;
+	  $end = $this->getOption( 'end' ) ? $this->getOption( 'end' ) : 21000000;
+
+		$lookup = WikibaseRepo::getDefaultInstance()->getEntityLookup();
 		$n = 0;
 		$itemMap = array();
-
-		while( $n <= $amount {
-			$itemId = 'Q' . rand( start, end );
+		while( $n <= $amount ) {
+			$itemId = 'Q' . rand( $start, $end );
 			if( array_key_exists( $itemId, $itemMap ) ) {
 				continue;
 			}
@@ -41,9 +42,9 @@ class ConstraintReport extends \Maintenance {
 				$params = array( 'entityId' => $itemId, 'referenceTimestamp' => null );
 				$resultSummary = $service->getResults( $params );
 				$messageToLog = $service->buildMessageForLog( $resultSummary, null, $params );
-				$service->writeToLog( $messageToLog );	
-				$amount += 1;
-				echo "check $itemId; amount of items checked: $amount \n";
+				$service->writeToLog( $messageToLog );
+				$n += 1;
+				echo "check $itemId; amount of items checked: $n \n";
 			}
 		}
 	}

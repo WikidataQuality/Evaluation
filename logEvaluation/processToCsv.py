@@ -32,8 +32,6 @@ with open(sys.argv[1]) as f:
             matches = result_summary['Matches with reference'] + result_summary['Matches without reference']
             partials = result_summary['Partial matches with reference'] + result_summary['Partial matches without reference']
             mismatches = result_summary['Mismatches with reference']+ result_summary['Mismatches without reference']
-            if matches + partials + mismatches == 0:
-                continue
             output = str(a['entity_id']) + ';'
             output += str(result_summary['Matches with reference']) + ';' + str(result_summary['Matches without reference']) + ';' + str(result_summary['Partial matches with reference']) + ';' + str(result_summary['Partial matches without reference']) + ';' + str(result_summary['Mismatches with reference']) + ';' + str(result_summary['Mismatches without reference']) + ';' + str(matches) + ';' + str(partials) + ';' + str(mismatches)
             if partials != 0:
@@ -61,7 +59,7 @@ with open(sys.argv[1]) as f:
                             comp = v
                         constraints += v
                         constraints_intern += v
-                    
+
                     if key == 'Qualifier':
                         qualifer_vio = vio
                         qualifer_comp = comp

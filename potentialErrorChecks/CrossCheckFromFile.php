@@ -20,18 +20,18 @@ class CrossCheckFromFile extends \Maintenance {
 		$this->addOption( 'file', 'file with semicolon-seperated numeric item ids you want to be checked', true, true );
 		$this->addOption( 'number', 'number of items you want to be checked', false, true );
 	}
-		
+
 	public function execute(){
-	    if ( !$this->getOption( 'file' ) ) {
-            exit("Usage: php ConstraintReport.php --fileWithSemicolonSeperatedListOfItemsToCheck [numberOfItemsToCheck]");
-	    }
-	    $numberItemsToCheck = $this->getOption( 'number' ) ? $this->getOptions( 'number' ) : -1;
-		
-	    $itemsFile = file_get_contents( $this->getOptions( 'file' ) );
+	  if ( !$this->getOption( 'file' ) ) {
+      exit("Usage: php ConstraintReport.php --fileWithSemicolonSeperatedListOfItemsToCheck [numberOfItemsToCheck]");
+	  }
+	  $numberItemsToCheck = $this->getOption( 'number' ) ? $this->getOptions( 'number' ) : -1;
+
+		$itemsFile = file_get_contents( $this->getOptions( 'file' ) );
 		$items = explode( ';', $itemsFile );
 		$lookup = WikibaseRepo::getDefaultInstance()->getEntityLookup();
 
-        $n = 0;
+    $n = 0;
 		foreach( $items as $item ){
 			$itemId = 'Q' . $item;
 			echo "$itemId\n";
